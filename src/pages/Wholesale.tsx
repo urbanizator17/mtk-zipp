@@ -63,6 +63,7 @@ export default function Wholesale() {
             className="w-full h-full object-cover transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
             fetchPriority="high"
+            loading="eager"
             decoding="async"
           />
           {/* Dark overlays for readability and premium depth */}
@@ -322,8 +323,8 @@ export default function Wholesale() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-10px" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-[2rem] md:rounded-[3rem] overflow-hidden relative group shadow-2xl transform-gpu will-change-opacity"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
@@ -333,6 +334,7 @@ export default function Wholesale() {
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
               fetchPriority="high"
+              loading="eager"
               decoding="async"
             />
           </motion.div>

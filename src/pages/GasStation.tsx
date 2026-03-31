@@ -61,6 +61,7 @@ export default function GasStation() {
             className="w-full h-full object-cover object-[75%_center] md:object-center transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
             fetchPriority="high"
+            loading="eager"
             decoding="async"
           />
           {/* Dark overlays for readability and premium depth */}
@@ -291,7 +292,7 @@ export default function GasStation() {
                 src="/4.jpg" 
                 alt="Сервис МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-3xl"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
                 referrerPolicy="no-referrer"
               />
@@ -567,7 +568,7 @@ export default function GasStation() {
                 alt="АЗС МТК Вид сверху" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
@@ -586,7 +587,7 @@ export default function GasStation() {
                 alt="АЗС МТК Город" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
@@ -605,7 +606,7 @@ export default function GasStation() {
                 alt="АЗС МТК Детали" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>

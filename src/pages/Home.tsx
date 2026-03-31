@@ -59,6 +59,7 @@ export default function Home() {
             className="w-full h-full object-cover object-[75%_center] md:object-center transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
             fetchPriority="high"
+            loading="eager"
             decoding="async"
           />
           {/* Dark overlays for readability and premium depth */}
@@ -209,7 +210,7 @@ export default function Home() {
                 alt="Качество топлива МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
             </motion.div>
@@ -284,7 +285,7 @@ export default function Home() {
                 alt="Оптовые поставки ГСМ" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
             </motion.div>
@@ -358,7 +359,7 @@ export default function Home() {
                 src="/4.jpg" 
                 alt="АЗС МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
             </motion.div>
