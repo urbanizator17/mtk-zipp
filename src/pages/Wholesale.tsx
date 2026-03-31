@@ -333,6 +333,7 @@ export default function Wholesale() {
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
               fetchPriority="high"
+              decoding="async"
             />
           </motion.div>
         </div>
