@@ -29,7 +29,6 @@ export default function Wholesale() {
     const text = `Новая заявка с сайта (Оптовые поставки)\nИнтересует: ${selectedProduct || 'Общий заказ'}\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nСпособ связи: ${formData.contactMethod}\nНикнейм/Номер: ${formData.social || 'Не указан'}\nинтересуется: ${formData.question || 'Нет'}`;
     
     try {
-      // Send to our backend API which will handle the Telegram message
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -61,10 +60,11 @@ export default function Wholesale() {
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.img
             style={{ y: scrollY * 0.4 }}
-            src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=1920&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=1200&auto=format&fit=crop"
             alt="Оптовые поставки МТК"
             className="w-full h-full object-cover grayscale-[0.8] opacity-40 transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
+            loading="eager"
           />
           {/* Dark luxury overlays */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]"></div>
@@ -279,22 +279,26 @@ export default function Wholesale() {
               {
                 id: 1,
                 title: "Бензин АИ-92",
-                desc: "— самая распространенная марка бензина в России. Высокооктановое топливо, предназначенное для двигателей карбюраторного типа"
+                desc: "— самая распространенная марка бензина в России.",
+                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
               },
               {
                 id: 2,
                 title: "Бензин АИ-95",
-                desc: "— премиальная марка топлива с улучшенными характеристиками. По сравнению с 92-м бензином содержит больше противодетонирующих присадок"
+                desc: "— премиальная марка топлива с улучшенными характеристиками.",
+                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
               },
               {
                 id: 3,
                 title: "Бензин АИ-100",
-                desc: "— передовой вид топлива на российском рынке. Способен существенно снизить расход топлива. Каждые 100 километров удастся сэкономить 10%"
+                desc: "— передовой вид топлива на российском рынке.",
+                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
               },
               {
                 id: 4,
                 title: "ДТ Евро-5",
-                desc: "— сделано согласно европейским стандартам и помогает увеличить срок службы двигателя, увеличивает его износостойкость и мощность"
+                desc: "— сделано согласно европейским стандартам.",
+                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
               }
             ].map((product, index) => (
               <motion.div
@@ -308,14 +312,17 @@ export default function Wholesale() {
                   delay: index * 0.1,
                   ease: "easeOut"
                 }}
-                className="bg-white rounded-[2rem] p-8 md:p-12 border border-gray-100 shadow-sm hover:shadow-xl cursor-default transform-gpu will-change-[transform,opacity]"
+                className="bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl cursor-default transform-gpu will-change-[transform,opacity]"
               >
-                <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-white text-xl font-light mb-8 shadow-[0_10px_20px_rgba(220,38,38,0.2)] group-hover:scale-110 transition-transform duration-500">
-                  {product.id}
+                <img src={product.img} alt={product.title} className="w-full h-48 object-cover" referrerPolicy="no-referrer" loading="lazy" />
+                <div className="p-8 md:p-12">
+                  <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-white text-xl font-light mb-8 shadow-[0_10px_20px_rgba(220,38,38,0.2)]">
+                    {product.id}
+                  </div>
+                  <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed">
+                    <span className="text-gray-900 font-medium">{product.title}</span> {product.desc}
+                  </p>
                 </div>
-                <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed">
-                  <span className="text-gray-900 font-medium">{product.title}</span> {product.desc}
-                </p>
               </motion.div>
             ))}
           </div>
@@ -330,7 +337,7 @@ export default function Wholesale() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
             <img 
-              src="https://messages-prod.27c852f3500f38c1e7786e2c9ff9e48f.r2.cloudflarestorage.com/019d2523-7452-7244-af07-639ffd7a6715/1774867362387-019d3e56-8253-78d4-8e63-925fce3e86c3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=75514238966d6677c3874ef9149f1398%2F20260330%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260330T104242Z&X-Amz-Expires=3600&X-Amz-Signature=c136d3eb045124fecce640a327ce919497fe2d4c5af1033c223ead5c6faa6daa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" 
+              src="https://messages-prod.27c852f3500f38c1e7786e2c9ff9e48f.r2.cloudflarestorage.com/019d2523-7452-7244-af07-639ffd7a6715/1774867362387-019d3e56-8253-78d4-8e63-925fce3e86c3.png?auto=format&fit=crop&w=1200" 
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
