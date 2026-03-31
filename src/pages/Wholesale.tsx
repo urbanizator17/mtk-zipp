@@ -62,7 +62,8 @@ export default function Wholesale() {
             alt="Оптовые поставки МТК"
             className="w-full h-full object-cover transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
-            loading="eager"
+            fetchPriority="high"
+            decoding="async"
           />
           {/* Dark overlays for readability and premium depth */}
           <div className="absolute inset-0 bg-black/60"></div>
@@ -331,6 +332,8 @@ export default function Wholesale() {
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
         </div>
@@ -516,7 +519,8 @@ export default function Wholesale() {
                 alt="Бензовоз МТК" 
                 className="absolute inset-0 w-full h-full object-cover object-right transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[1.5rem] md:rounded-[2rem] transform-gpu backface-hidden"
                 referrerPolicy="no-referrer"
-                loading="eager"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-700"></div>
             </div>

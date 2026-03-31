@@ -58,6 +58,8 @@ export default function Home() {
             style={{ y, willChange: 'transform' }}
             className="w-full h-full object-cover object-[75%_center] md:object-center transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
+            fetchPriority="high"
+            decoding="async"
           />
           {/* Dark overlays for readability and premium depth */}
           <div className="absolute inset-0 bg-black/60"></div>
@@ -207,6 +209,8 @@ export default function Home() {
                 alt="Качество топлива МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </div>
@@ -280,6 +284,8 @@ export default function Home() {
                 alt="Оптовые поставки ГСМ" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </div>
@@ -352,6 +358,8 @@ export default function Home() {
                 src="/4.jpg" 
                 alt="АЗС МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </div>

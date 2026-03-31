@@ -60,6 +60,8 @@ export default function GasStation() {
             style={{ y }}
             className="w-full h-full object-cover object-[75%_center] md:object-center transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
+            fetchPriority="high"
+            decoding="async"
           />
           {/* Dark overlays for readability and premium depth */}
           <div className="absolute inset-0 bg-black/60"></div>
@@ -290,6 +292,7 @@ export default function GasStation() {
                 alt="Сервис МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-3xl"
                 loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
               
@@ -565,6 +568,7 @@ export default function GasStation() {
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
             </motion.div>
@@ -583,6 +587,7 @@ export default function GasStation() {
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
             </motion.div>
@@ -601,6 +606,7 @@ export default function GasStation() {
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
             </motion.div>
@@ -619,6 +625,7 @@ export default function GasStation() {
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
             </motion.div>
@@ -683,6 +690,7 @@ export default function GasStation() {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-t-3xl"
                     referrerPolicy="no-referrer"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
 
