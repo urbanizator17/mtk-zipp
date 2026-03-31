@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { ArrowLeft, Plus, X, MessageCircle, Send, PhoneCall, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
@@ -7,7 +7,8 @@ export default function Wholesale() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 400]);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -18,9 +19,6 @@ export default function Wholesale() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,22 +54,19 @@ export default function Wholesale() {
     <div className="relative min-h-screen bg-[#030303] text-white font-sans selection:bg-red-600 selection:text-white">
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex flex-col bg-[#030303]">
-        {/* Background Image with Premium Overlays */}
+        {/* Background Image with Overlays */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.img
-            style={{ y: scrollY * 0.4 }}
-            src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=1200&auto=format&fit=crop"
+            style={{ y, willChange: 'transform' }}
+            src="/Бензовоз МТК.png"
             alt="Оптовые поставки МТК"
-            className="w-full h-full object-cover grayscale-[0.8] opacity-40 transform-gpu backface-hidden scale-110"
+            className="w-full h-full object-cover transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
             loading="eager"
           />
-          {/* Dark luxury overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#030303] via-transparent to-[#030303]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(209,32,32,0.08),transparent_60%)]"></div>
-          {/* Noise Texture */}
-          <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+          {/* Dark overlays for readability and premium depth */}
+          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
         </div>
 
         {/* Header (Minimalist) */}
@@ -279,26 +274,22 @@ export default function Wholesale() {
               {
                 id: 1,
                 title: "Бензин АИ-92",
-                desc: "— самая распространенная марка бензина в России.",
-                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
+                desc: "— самая распространенная марка бензина в России."
               },
               {
                 id: 2,
                 title: "Бензин АИ-95",
-                desc: "— премиальная марка топлива с улучшенными характеристиками.",
-                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
+                desc: "— премиальная марка топлива с улучшенными характеристиками."
               },
               {
                 id: 3,
                 title: "Бензин АИ-100",
-                desc: "— передовой вид топлива на российском рынке.",
-                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
+                desc: "— передовой вид топлива на российском рынке."
               },
               {
                 id: 4,
                 title: "ДТ Евро-5",
-                desc: "— сделано согласно европейским стандартам.",
-                img: "https://images.unsplash.com/photo-1594498652286-6f8149806325?q=80&w=600&auto=format&fit=crop"
+                desc: "— сделано согласно европейским стандартам."
               }
             ].map((product, index) => (
               <motion.div
@@ -314,7 +305,6 @@ export default function Wholesale() {
                 }}
                 className="bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl cursor-default transform-gpu will-change-[transform,opacity]"
               >
-                <img src={product.img} alt={product.title} className="w-full h-48 object-cover" referrerPolicy="no-referrer" loading="lazy" />
                 <div className="p-8 md:p-12">
                   <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-white text-xl font-light mb-8 shadow-[0_10px_20px_rgba(220,38,38,0.2)]">
                     {product.id}
@@ -337,7 +327,7 @@ export default function Wholesale() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
             <img 
-              src="https://messages-prod.27c852f3500f38c1e7786e2c9ff9e48f.r2.cloudflarestorage.com/019d2523-7452-7244-af07-639ffd7a6715/1774867362387-019d3e56-8253-78d4-8e63-925fce3e86c3.png?auto=format&fit=crop&w=1200" 
+              src="https://cdn.phototourl.com/free/2026-03-31-d8dd01b6-c067-4dbf-aac9-880cea0232ae.png" 
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
@@ -459,7 +449,7 @@ export default function Wholesale() {
                     type="text" 
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) => setFormData({...formData, name: e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '')})}
                     placeholder="Ваше имя"
                     className="w-full bg-transparent border border-gray-800 rounded-2xl px-6 py-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all font-light"
                   />
@@ -467,7 +457,7 @@ export default function Wholesale() {
                     type="tel" 
                     required
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/[^\d+]/g, '')})}
                     placeholder="Укажите свой номер телефона"
                     className="w-full bg-transparent border border-gray-800 rounded-2xl px-6 py-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all font-light"
                   />
@@ -522,11 +512,11 @@ export default function Wholesale() {
             {/* Right: Image */}
             <div className="w-full lg:w-1/2 relative min-h-[300px] sm:min-h-[400px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group transform-gpu">
               <img 
-                src="https://messages-prod.27c852f3500f38c1e7786e2c9ff9e48f.r2.cloudflarestorage.com/019d2523-7452-7244-af07-639ffd7a6715/1774862229489-019d3e07-c84e-7c4d-bda6-683b44d5c6f5.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=75514238966d6677c3874ef9149f1398%2F20260330%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260330T104207Z&X-Amz-Expires=3600&X-Amz-Signature=91ee64e8c6c5e21a7fbc1566d05ab6ccb4c11055a7ba7fad3956d100191458f7&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" 
+                src="/Бензовоз МТК.png" 
                 alt="Бензовоз МТК" 
                 className="absolute inset-0 w-full h-full object-cover object-right transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[1.5rem] md:rounded-[2rem] transform-gpu backface-hidden"
                 referrerPolicy="no-referrer"
-                loading="lazy"
+                loading="eager"
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-700"></div>
             </div>
@@ -594,7 +584,7 @@ export default function Wholesale() {
                         type="text" 
                         required
                         value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        onChange={(e) => setFormData({...formData, name: e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '')})}
                         className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600/50 transition-all font-light"
                         placeholder="Иван Иванов"
                       />
@@ -605,7 +595,7 @@ export default function Wholesale() {
                         type="tel" 
                         required
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/[^\d+]/g, '')})}
                         className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600/50 transition-all font-light"
                         placeholder="+7 (999) 000-00-00"
                       />

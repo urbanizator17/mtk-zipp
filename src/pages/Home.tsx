@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Instagram, Phone, X, MessageCircle, Send, PhoneCall, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 400]);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     method: 'whatsapp'
   });
-
-  React.useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,9 +53,9 @@ export default function Home() {
         {/* Background Image with Overlays */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <motion.img
-            src="./1.jpg"
+            src="/1.jpg"
             alt="МТК АЗС Background"
-            style={{ y: scrollY * 0.4 }}
+            style={{ y, willChange: 'transform' }}
             className="w-full h-full object-cover object-[75%_center] md:object-center transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
           />
@@ -208,7 +203,7 @@ export default function Home() {
               
               {/* Placeholder for the Jerrycan / Gas station image */}
               <img 
-                src="./МТК.png" 
+                src="/МТК.png" 
                 alt="Качество топлива МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
@@ -281,7 +276,7 @@ export default function Home() {
               
               {/* Placeholder for the Truck image */}
               <img 
-                src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2000&auto=format&fit=crop" 
+                src="opt.png" 
                 alt="Оптовые поставки ГСМ" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
@@ -354,7 +349,7 @@ export default function Home() {
               
               {/* Gas station canopy image */}
               <img 
-                src="./4.jpg" 
+                src="/4.jpg" 
                 alt="АЗС МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
               />
@@ -441,11 +436,11 @@ export default function Home() {
             >
               {/* Yandex Map Iframe */}
               <iframe 
-                src="https://yandex.ru/map-widget/v1/?ll=47.498414%2C42.983024&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1NjMwNzMzMxJO0KDQvtGB0YHQuNGPLCDQoNC10YHQv9GD0LHQu9C40LrQsCDQlNCw0LPQtdGB0YLQsNC9LCDQnNCw0YXQsNGH0LrQsNC70LAsINC_0YDQvtGB0L_QtdC60YIg0JjQvNCw0LzQsCDQqNCw0LzQuNC70Y8sIDE3IgoNw2dEQhX5WzNC&z=16.88" 
+                src="https://yandex.ru/map-widget/v1/?ll=47.498414,42.983024&z=16" 
                 width="100%" 
                 height="100%" 
                 frameBorder="0" 
-                allowFullScreen={true}
+                allowFullScreen
                 className="absolute inset-0 w-full h-full"
                 loading="lazy"
               ></iframe>
@@ -505,7 +500,7 @@ export default function Home() {
                           required
                           type="text"
                           value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          onChange={(e) => setFormData({...formData, name: e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '')})}
                           placeholder="Иван Иванов"
                           className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600 transition-all"
                         />
@@ -517,7 +512,7 @@ export default function Home() {
                           required
                           type="tel"
                           value={formData.phone}
-                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/[^\d+]/g, '')})}
                           placeholder="+7 (999) 000-00-00"
                           className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600 transition-all"
                         />

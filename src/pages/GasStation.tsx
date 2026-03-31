@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { ArrowLeft, Coffee, Wifi, Droplet, ShieldCheck, MapPin, Clock, Moon, Instagram, X, MessageCircle, Send, PhoneCall, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +6,8 @@ import React, { useEffect, useState } from 'react';
 export default function GasStation() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 400]);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -15,9 +16,6 @@ export default function GasStation() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,9 +55,9 @@ export default function GasStation() {
         {/* Background Image with Premium Overlays */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <motion.img
-            src="./11.jpg"
+            src="/11.jpg"
             alt="АЗС МТК Premium"
-            style={{ y: scrollY * 0.4 }}
+            style={{ y }}
             className="w-full h-full object-cover object-[75%_center] md:object-center transform-gpu backface-hidden scale-110"
             referrerPolicy="no-referrer"
           />
@@ -217,7 +215,7 @@ export default function GasStation() {
                       required
                       type="text"
                       value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      onChange={(e) => setFormData({...formData, name: e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '')})}
                       className="w-full bg-white/5 border border-white/10 px-4 py-4 text-white focus:outline-none focus:border-red-600 transition-colors"
                       placeholder="Иван Иванов"
                     />
@@ -228,7 +226,7 @@ export default function GasStation() {
                       required
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/[^\d+]/g, '')})}
                     className="w-full bg-white/5 border border-white/10 px-4 py-4 text-white focus:outline-none focus:border-red-600 transition-colors"
                     placeholder="+7 (999) 000-00-00"
                   />
@@ -288,7 +286,7 @@ export default function GasStation() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-red-900/10 to-transparent z-10 mix-blend-overlay"></div>
               <img 
-                src="./4.jpg" 
+                src="/4.jpg" 
                 alt="Сервис МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-3xl"
                 loading="lazy"
@@ -562,7 +560,7 @@ export default function GasStation() {
               className="md:col-span-8 h-[250px] md:h-[450px] rounded-2xl md:rounded-3xl overflow-hidden group relative shadow-xl will-change-transform"
             >
               <img 
-                src="./1.jpg" 
+                src="/1.jpg" 
                 alt="АЗС МТК Вид сверху" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
@@ -580,7 +578,7 @@ export default function GasStation() {
               className="md:col-span-4 md:row-span-2 h-[350px] md:h-auto rounded-2xl md:rounded-3xl overflow-hidden group relative shadow-xl will-change-transform"
             >
               <img 
-                src="./11.jpg" 
+                src="/11.jpg" 
                 alt="АЗС МТК Город" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
@@ -598,7 +596,7 @@ export default function GasStation() {
               className="md:col-span-4 h-[200px] md:h-[350px] rounded-2xl md:rounded-3xl overflow-hidden group relative shadow-xl will-change-transform"
             >
               <img 
-                src="./4.jpg" 
+                src="/4.jpg" 
                 alt="АЗС МТК Детали" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
@@ -616,7 +614,7 @@ export default function GasStation() {
               className="md:col-span-4 h-[200px] md:h-[350px] rounded-2xl md:rounded-3xl overflow-hidden group relative shadow-xl will-change-transform"
             >
               <img 
-                src="./1.jpg" 
+                src="/1.jpg" 
                 alt="АЗС МТК Ночь" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
@@ -647,22 +645,22 @@ export default function GasStation() {
               {
                 address: "г.Махачкала пр-т Шамиля 17/1",
                 hours: "Круглосуточно",
-                img: "./1.jpg"
+                img: "/1.jpg"
               },
               {
                 address: "г.Махачкала Амет-хана Султана 22",
                 hours: "Круглосуточно",
-                img: "./11.jpg"
+                img: "/11.jpg"
               },
               {
                 address: "Семендер, Казбекова 296",
                 hours: "Круглосуточно",
-                img: "./4.jpg"
+                img: "/4.jpg"
               },
               {
                 address: "Каммаева",
                 hours: "Круглосуточно",
-                img: "./1.jpg"
+                img: "/1.jpg"
               }
             ].map((loc, idx) => (
               <motion.div
@@ -786,11 +784,11 @@ export default function GasStation() {
             >
               {/* Yandex Map Iframe */}
               <iframe 
-                src="https://yandex.ru/map-widget/v1/?ll=47.498414%2C42.983024&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1NjMwNzMzMxJO0KDQvtGB0YHQuNGPLCDQoNC10YHQv9GD0LHQu9C40LrQsCDQlNCw0LPQtdGB0YLQsNC9LCDQnNCw0YXQsNGH0LrQsNC70LAsINC_0YDQvtGB0L_QtdC60YIg0JjQvNCw0LzQsCDQqNCw0LzQuNC70Y8sIDE3IgoNw2dEQhX5WzNC&z=16.88" 
+                src="https://yandex.ru/map-widget/v1/?ll=47.498414,42.983024&z=16" 
                 width="100%" 
                 height="100%" 
                 frameBorder="0" 
-                allowFullScreen={true}
+                allowFullScreen
                 className="absolute inset-0 w-full h-full"
                 loading="lazy"
               ></iframe>
