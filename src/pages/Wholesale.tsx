@@ -328,12 +328,11 @@ export default function Wholesale() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
             <img 
-              src="https://cdn.phototourl.com/free/2026-03-31-d8dd01b6-c067-4dbf-aac9-880cea0232ae.png" 
+              src="/platform.png" 
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
-              loading="lazy"
-              decoding="async"
+              fetchPriority="high"
             />
           </motion.div>
         </div>

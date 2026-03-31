@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
-import Home from './pages/Home';
-import GasStation from './pages/GasStation';
-import Wholesale from './pages/Wholesale';
-import Privacy from './pages/Privacy';
 import CookieBanner from './components/CookieBanner';
+
+// Lazy load pages
+const Home = lazy(() => import('./pages/Home'));
+const GasStation = lazy(() => import('./pages/GasStation'));
+const Wholesale = lazy(() => import('./pages/Wholesale'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+
+// Loading component for Suspense
+const PageLoader = () => (
+  <div className="fixed inset-0 bg-white flex items-center justify-center z-[100]">
+    <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 // Back to Top Component
 const BackToTop = () => {
@@ -76,15 +85,17 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => (
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
-      {/* @ts-ignore */}
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-        <Route path="/gas-station" element={<PageWrapper><GasStation /></PageWrapper>} />
-        <Route path="/wholesale" element={<PageWrapper><Wholesale /></PageWrapper>} />
-        <Route path="/privacy" element={<PageWrapper><Privacy /></PageWrapper>} />
-      </Routes>
-    </AnimatePresence>
+    <Suspense fallback={<PageLoader />}>
+      <AnimatePresence mode="wait">
+        {/* @ts-ignore */}
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+          <Route path="/gas-station" element={<PageWrapper><GasStation /></PageWrapper>} />
+          <Route path="/wholesale" element={<PageWrapper><Wholesale /></PageWrapper>} />
+          <Route path="/privacy" element={<PageWrapper><Privacy /></PageWrapper>} />
+        </Routes>
+      </AnimatePresence>
+    </Suspense>
   );
 }
 
