@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 export default function Wholesale() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('');
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 400]);
@@ -14,7 +16,8 @@ export default function Wholesale() {
     phone: '',
     contactMethod: 'WhatsApp',
     social: '',
-    question: ''
+    question: '',
+    consent: false
   });
 
   useEffect(() => {
@@ -23,6 +26,8 @@ export default function Wholesale() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
+    setIsSubmitting(true);
     
     const text = `Новая заявка с сайта (Оптовые поставки)\nИнтересует: ${selectedProduct || 'Общий заказ'}\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nСпособ связи: ${formData.contactMethod}\nНикнейм/Номер: ${formData.social || 'Не указан'}\nинтересуется: ${formData.question || 'Нет'}`;
     
@@ -36,18 +41,22 @@ export default function Wholesale() {
       });
       
       if (!response.ok) {
-        console.error('Failed to send message');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.details || errorData.error || 'Failed to send message');
       }
+      
+      setIsSuccess(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setIsSuccess(false);
+        setFormData({ name: '', phone: '', contactMethod: 'WhatsApp', social: '', question: '', consent: false });
+      }, 3000);
     } catch (error) {
       console.error('Error sending message:', error);
+      setSubmitError(`Ошибка при отправке: ${error instanceof Error ? error.message : 'Пожалуйста, проверьте настройки почты или попробуйте позже.'}`);
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSuccess(true);
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setIsSuccess(false);
-      setFormData({ name: '', phone: '', contactMethod: 'WhatsApp', social: '', question: '' });
-    }, 3000);
   };
 
   return (
@@ -329,7 +338,7 @@ export default function Wholesale() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
             <img 
-              src="/platform.png" 
+              src="https://i.postimg.cc/t4N6XKWx/imagen-4-0-generate-001-a-fuel-nozzles-at-gas.png" 
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
@@ -499,16 +508,28 @@ export default function Wholesale() {
                     </div>
                   </div>
                   
+                  <div className="flex items-start gap-3 mt-4">
+                    <input 
+                      type="checkbox" 
+                      id="consent-wholesale-bottom"
+                      required
+                      checked={formData.consent}
+                      onChange={(e) => setFormData({...formData, consent: e.target.checked})}
+                      className="mt-1 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-600 cursor-pointer"
+                    />
+                    <label htmlFor="consent-wholesale-bottom" className="text-[10px] text-gray-400 leading-relaxed cursor-pointer select-none">
+                      Я даю согласие на обработку моих персональных данных в соответствии с <Link to="/privacy" className="underline hover:text-gray-600">политикой конфиденциальности</Link>
+                    </label>
+                  </div>
+
                   <div className="pt-2">
                     <button 
                       type="submit"
-                      className="w-full sm:w-auto bg-[#D12020] hover:bg-red-700 text-white rounded-2xl px-12 py-4 font-light tracking-wide transition-colors shadow-[0_10px_20px_rgba(209,32,32,0.2)] hover:shadow-[0_15px_30px_rgba(209,32,32,0.3)]"
+                      disabled={!formData.consent}
+                      className="w-full sm:w-auto bg-[#D12020] hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-2xl px-12 py-4 font-light tracking-wide transition-colors shadow-[0_10px_20px_rgba(209,32,32,0.2)] hover:shadow-[0_15px_30px_rgba(209,32,32,0.3)]"
                     >
                       Оставить заявку
                     </button>
-                    <p className="mt-4 text-[10px] text-gray-400 leading-relaxed">
-                      Нажимая кнопку, вы соглашаетесь с <Link to="/privacy" className="underline hover:text-gray-600">политикой конфиденциальности</Link>
-                    </p>
                   </div>
                 </form>
               )}
@@ -632,17 +653,38 @@ export default function Wholesale() {
                       </div>
                     </div>
                     
+                    <div className="flex items-start gap-3 mt-4">
+                      <input 
+                        type="checkbox" 
+                        id="consent-wholesale-modal"
+                        required
+                        checked={formData.consent}
+                        onChange={(e) => setFormData({...formData, consent: e.target.checked})}
+                        className="mt-1 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-600 cursor-pointer"
+                      />
+                      <label htmlFor="consent-wholesale-modal" className="text-[10px] text-gray-400 leading-relaxed cursor-pointer select-none">
+                        Я даю согласие на обработку моих персональных данных в соответствии с <Link to="/privacy" className="underline hover:text-gray-600">политикой конфиденциальности</Link>
+                      </label>
+                    </div>
+                    
+                    {submitError && (
+                      <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm mt-4">
+                        {submitError}
+                      </div>
+                    )}
+                    
                     <button 
                       type="submit"
-                      className="w-full bg-[#D12020] hover:bg-red-700 text-white rounded-2xl py-4 mt-4 font-light tracking-wide transition-colors shadow-[0_10px_20px_rgba(209,32,32,0.2)] hover:shadow-[0_15px_30px_rgba(209,32,32,0.3)]"
+                      disabled={!formData.consent || isSubmitting}
+                      className="w-full bg-[#D12020] hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-2xl py-4 mt-4 font-light tracking-wide transition-colors shadow-[0_10px_20px_rgba(209,32,32,0.2)] hover:shadow-[0_15px_30px_rgba(209,32,32,0.3)] flex justify-center items-center"
                     >
-                      Отправить заявку
+                      {isSubmitting ? (
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      ) : 'Отправить заявку'}
                     </button>
-                    
-                    <p className="text-center text-[10px] text-gray-400 mt-4 leading-relaxed">
-                      Нажимая кнопку, вы соглашаетесь с <br/>
-                      <Link to="/privacy" className="underline hover:text-gray-600">политикой конфиденциальности</Link>
-                    </p>
                   </form>
                 </>
               )}

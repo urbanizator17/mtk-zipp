@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import nodemailer from 'nodemailer';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -12,33 +13,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
+    const host = process.env.SMTP_HOST;
+    const port = parseInt(process.env.SMTP_PORT || '465');
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+    const recipient = process.env.RECIPIENT_EMAIL;
 
-    if (!botToken || !chatId) {
-      return res.status(500).json({ error: "Telegram not configured" });
+    if (!host || !user || !pass || !recipient) {
+      console.error("Missing SMTP configuration");
+      return res.status(500).json({ error: "Email server not configured" });
     }
 
-    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-    
-    const tgResponse = await fetch(telegramUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465, // true for 465, false for other ports
+      auth: {
+        user,
+        pass,
       },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-      })
     });
 
-    if (!tgResponse.ok) {
-      throw new Error(`Failed to send to Telegram`);
-    }
+    const mailOptions = {
+      from: `"МТК Сайт" <${user}>`,
+      to: recipient,
+      subject: 'Новая заявка с сайта МТК',
+      text: message,
+      // You can also add html: message.replace(/\n/g, '<br>') if you want
+    };
 
-    return res.json({ success: true, message: "Message sent successfully" });
+    await transporter.sendMail(mailOptions);
+
+    return res.json({ success: true, message: "Message sent successfully via Email" });
   } catch (error) {
-    console.error("Error in /api/contact:", error);
-    return res.status(500).json({ error: "Failed to send message" });
+    console.error("Error in /api/contact (Email):", error);
+    return res.status(500).json({ error: "Failed to send email" });
   }
 }

@@ -6,23 +6,28 @@ import { Link } from 'react-router-dom';
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 400]);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    method: 'whatsapp'
+    method: 'whatsapp',
+    consent: false
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
+    setIsSubmitting(true);
     
     // Here you would normally send the data to a backend API
     // which would then send the WhatsApp message to +7 964 003 00 81
     const text = `Новая заявка с сайта (Главная страница)\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nСпособ связи: ${formData.method}`;
     
     try {
-      // Send to our backend API which will handle the Telegram message
+      // Send to our backend API which will handle the email message
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -32,18 +37,22 @@ export default function Home() {
       });
       
       if (!response.ok) {
-        console.error('Failed to send message');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.details || errorData.error || 'Failed to send message');
       }
+      
+      setIsSuccess(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setIsSuccess(false);
+        setFormData({ name: '', phone: '', method: 'whatsapp', consent: false });
+      }, 3000);
     } catch (error) {
       console.error('Error sending message:', error);
+      setSubmitError(`Ошибка при отправке: ${error instanceof Error ? error.message : 'Пожалуйста, проверьте настройки почты или попробуйте позже.'}`);
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSuccess(true);
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setIsSuccess(false);
-      setFormData({ name: '', phone: '', method: 'whatsapp' });
-    }, 3000);
   };
 
   return (
@@ -281,7 +290,7 @@ export default function Home() {
               
               {/* Placeholder for the Truck image */}
               <img 
-                src="opt.png" 
+                src="/opt.png" 
                 alt="Оптовые поставки ГСМ" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
@@ -552,15 +561,38 @@ export default function Home() {
                         </div>
                       </div>
 
+                      <div className="flex items-start gap-3 mt-4">
+                        <input 
+                          type="checkbox" 
+                          id="consent"
+                          required
+                          checked={formData.consent}
+                          onChange={(e) => setFormData({...formData, consent: e.target.checked})}
+                          className="mt-1 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-600 cursor-pointer"
+                        />
+                        <label htmlFor="consent" className="text-[10px] text-gray-400 leading-relaxed cursor-pointer select-none">
+                          Я даю согласие на обработку моих персональных данных в соответствии с <Link to="/privacy" className="underline hover:text-gray-500">политикой конфиденциальности</Link>
+                        </label>
+                      </div>
+
+                      {submitError && (
+                        <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm mt-4">
+                          {submitError}
+                        </div>
+                      )}
+
                       <button 
                         type="submit"
-                        className="w-full py-5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium tracking-wide rounded-2xl transition-all shadow-lg shadow-red-600/20 active:scale-[0.98] mt-4"
+                        disabled={!formData.consent || isSubmitting}
+                        className="w-full py-5 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-sm font-medium tracking-wide rounded-2xl transition-all shadow-lg shadow-red-600/20 active:scale-[0.98] mt-4 flex justify-center items-center"
                       >
-                        Отправить заявку
+                        {isSubmitting ? (
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        ) : 'Отправить заявку'}
                       </button>
-                      <p className="mt-4 text-center text-[10px] text-gray-400 leading-relaxed">
-                        Нажимая кнопку, вы соглашаетесь с <Link to="/privacy" className="underline hover:text-gray-500">политикой конфиденциальности</Link>
-                      </p>
                     </form>
                   </>
                 )}

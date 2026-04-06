@@ -1,5 +1,6 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
+import nodemailer from "nodemailer";
 import path from "path";
 
 async function startServer() {
@@ -18,43 +19,91 @@ async function startServer() {
       const { message } = req.body;
       
       if (!message) {
-        return res.status(400).json({ error: "Message is required" });
+        return res.status(400).json({ error: 'Message is required' });
       }
 
-      const botToken = process.env.TELEGRAM_BOT_TOKEN;
-      const chatId = process.env.TELEGRAM_CHAT_ID;
+      const host = (process.env.SMTP_HOST || '').trim();
+      const port = parseInt((process.env.SMTP_PORT || '465').trim());
+      const user = (process.env.SMTP_USER || '').trim();
+      const pass = (process.env.SMTP_PASS || '').trim();
+      const recipient = (process.env.RECIPIENT_EMAIL || '').trim();
 
-      if (!botToken || !chatId) {
-        console.log("----------------------------------------");
-        console.log("TELEGRAM NOT CONFIGURED YET. SIMULATING:");
-        console.log(message);
-        console.log("----------------------------------------");
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        return res.json({ success: true, message: "Simulated successfully" });
+      if (!host || !user || !pass || !recipient) {
+        console.error("Missing SMTP configuration");
+        return res.status(500).json({ error: "Email server not configured" });
       }
 
-      const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-      const tgResponse = await fetch(telegramUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      // Create transport configuration
+      let transportConfig: any = {
+        auth: {
+          user,
+          pass,
         },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-        })
-      });
+        connectionTimeout: 20000,
+        greetingTimeout: 20000,
+        socketTimeout: 20000,
+        debug: true,
+        logger: true
+      };
 
-      if (!tgResponse.ok) {
-        const errorData = await tgResponse.text();
-        console.error("Telegram API Error:", errorData);
-        throw new Error("Failed to send to Telegram");
+      // Use service presets or explicit config for better compatibility
+      const lowerHost = host.toLowerCase();
+      if (lowerHost.includes('mail.ru')) {
+        transportConfig.service = 'mail.ru';
+        transportConfig.host = 'smtp.mail.ru';
+        transportConfig.port = 465;
+        transportConfig.secure = true;
+      } else if (lowerHost.includes('yandex')) {
+        // Use the official built-in Yandex service preset
+        transportConfig = {
+          service: 'Yandex',
+          auth: {
+            user,
+            pass,
+          },
+          debug: true,
+          logger: true,
+          connectionTimeout: 20000,
+          greetingTimeout: 20000,
+          socketTimeout: 20000,
+        };
+      } else if (lowerHost.includes('gmail')) {
+        transportConfig.service = 'gmail';
+      } else {
+        transportConfig.host = host;
+        transportConfig.port = port;
+        transportConfig.secure = port === 465;
       }
 
-      res.json({ success: true, message: "Message sent successfully" });
+      // Common TLS settings (if not already set by service preset)
+      if (!transportConfig.tls) {
+        transportConfig.tls = {
+          rejectUnauthorized: false,
+          minVersion: 'TLSv1.2',
+          servername: transportConfig.host || host
+        };
+      }
+
+      const transporter = nodemailer.createTransport(transportConfig);
+
+      const mailOptions = {
+        from: user, // Use plain email address as from
+        to: recipient,
+        subject: 'Новая заявка с сайта МТК',
+        text: message,
+      };
+
+      console.log(`Attempting to send email via ${host}:${port} (Service: ${transportConfig.service || 'None'})...`);
+      
+      await transporter.sendMail(mailOptions);
+      console.log("Email sent successfully");
+      return res.json({ success: true, message: "Message sent successfully via Email" });
     } catch (error) {
-      console.error("Error sending message:", error);
-      res.status(500).json({ error: "Failed to send message" });
+      console.error("Error in /api/contact (Email):", error);
+      return res.status(500).json({ 
+        error: "Failed to send email",
+        details: error instanceof Error ? error.message : String(error)
+      });
     }
   });
 
