@@ -338,7 +338,7 @@ export default function Wholesale() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
             <img 
-              src="https://i.postimg.cc/t4N6XKWx/imagen-4-0-generate-001-a-fuel-nozzles-at-gas.png" 
+              src="/imagen-4.0-generate-001_a_fuel_nozzles_at_gas_.png" 
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
@@ -694,7 +694,7 @@ export default function Wholesale() {
       </AnimatePresence>
 
       {/* --- FOOTER --- */}
-      <footer className="relative w-full bg-[#D12020] text-white py-16 md:py-24 px-6 md:px-12 z-10 overflow-hidden">
+      <footer id="контакты" className="relative w-full bg-[#D12020] text-white py-16 md:py-24 px-6 md:px-12 z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           {/* Footer Title */}
           <motion.div

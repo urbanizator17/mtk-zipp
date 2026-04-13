@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { Instagram, Phone, X, MessageCircle, Send, PhoneCall, Menu } from 'lucide-react';
+import { Phone, X, MessageCircle, Send, PhoneCall, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
@@ -427,11 +427,11 @@ export default function Home() {
             >
               <h3 className="text-white/90 font-light text-base md:text-lg mb-4">Социальные сети</h3>
               <div className="flex items-center gap-4 mb-8">
-                <a href="#" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300">
-                  <Instagram className="w-5 h-5" />
+                <a href="https://t.me/mtkazs" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="Telegram">
+                  <Send className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300">
-                  <Phone className="w-5 h-5" /> {/* Using Phone icon as placeholder for WhatsApp since lucide doesn't have whatsapp */}
+                <a href="https://wa.me/79889030092" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="WhatsApp">
+                  <MessageCircle className="w-5 h-5" />
                 </a>
               </div>
               <div className="flex flex-col space-y-2">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
 import CookieBanner from './components/CookieBanner';
@@ -93,6 +93,7 @@ function AnimatedRoutes() {
           <Route path="/gas-station" element={<PageWrapper><GasStation /></PageWrapper>} />
           <Route path="/wholesale" element={<PageWrapper><Wholesale /></PageWrapper>} />
           <Route path="/privacy" element={<PageWrapper><Privacy /></PageWrapper>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
     </Suspense>
