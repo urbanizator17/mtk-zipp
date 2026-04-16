@@ -57,3 +57,14 @@
 .will-change-opacity {
   will-change: opacity;
 }
+
+/* Optimize scroll performance for long pages */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
+/* Disable content-visibility for hero sections */
+section:first-of-type {
+  content-visibility: visible;
+}

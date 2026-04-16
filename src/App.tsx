@@ -70,31 +70,39 @@ function ScrollToTop() {
 }
 
 // Page wrapper for transitions
-const PageWrapper = ({ children }: { children: React.ReactNode }) => (
+const PageWrapper = React.memo(({ children }: { children: React.ReactNode }) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    transition={{ duration: 0.6, ease: "easeInOut" }}
-    className="will-change-opacity"
+    transition={{ duration: 0.4, ease: "easeOut" }}
+    className="will-change-opacity transform-gpu"
   >
     {children}
   </motion.div>
-);
+));
 
 function AnimatedRoutes() {
   const location = useLocation();
   return (
     <Suspense fallback={<PageLoader />}>
-      <AnimatePresence mode="wait">
-        {/* @ts-ignore */}
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-          <Route path="/gas-station" element={<PageWrapper><GasStation /></PageWrapper>} />
-          <Route path="/wholesale" element={<PageWrapper><Wholesale /></PageWrapper>} />
-          <Route path="/privacy" element={<PageWrapper><Privacy /></PageWrapper>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="w-full transform-gpu will-change-opacity"
+        >
+          <Routes location={location}>
+            <Route path="/" element={<Home />} />
+            <Route path="/gas-station" element={<GasStation />} />
+            <Route path="/wholesale" element={<Wholesale />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </motion.div>
       </AnimatePresence>
     </Suspense>
   );

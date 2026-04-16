@@ -342,8 +342,7 @@ export default function Wholesale() {
               alt="Нефтедобывающая платформа" 
               className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[2s] ease-out rounded-[2rem] md:rounded-[3rem] transform-gpu backface-hidden"
               referrerPolicy="no-referrer"
-              fetchPriority="high"
-              loading="eager"
+              loading="lazy"
               decoding="async"
             />
           </motion.div>
@@ -753,8 +752,8 @@ export default function Wholesale() {
               <ul className="flex flex-col space-y-4 font-light text-white/90">
                 <li><Link to="/privacy" className="hover:text-white transition-colors leading-relaxed inline-block">Политика обработки<br/>персональных данных</Link></li>
                 <li className="text-[10px] uppercase tracking-widest opacity-60 mt-4">
-                  ИНН: 0000000000<br/>
-                  ОГРН: 0000000000000
+                  ИНН: 052001363683<br/>
+                  ОГРН: 321057100063603
                 </li>
               </ul>
             </motion.div>

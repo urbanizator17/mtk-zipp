@@ -219,7 +219,7 @@ export default function Home() {
                 alt="Качество топлива МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
             </motion.div>
@@ -294,7 +294,7 @@ export default function Home() {
                 alt="Оптовые поставки ГСМ" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
                 referrerPolicy="no-referrer"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
             </motion.div>
@@ -368,7 +368,7 @@ export default function Home() {
                 src="/4.jpg" 
                 alt="АЗС МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-[1.5rem] md:rounded-[2rem]"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
             </motion.div>
@@ -437,7 +437,7 @@ export default function Home() {
               <div className="flex flex-col space-y-2">
                 <Link to="/privacy" className="text-xs text-white/60 hover:text-white transition-colors underline underline-offset-4">Политика конфиденциальности</Link>
                 <p className="text-[10px] text-white/40 uppercase tracking-widest">
-                  ИНН: 0000000000 | ОГРН: 0000000000000
+                  ИНН: 052001363683 | ОГРН: 321057100063603
                 </p>
               </div>
             </motion.div>

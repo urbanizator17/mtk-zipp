@@ -324,7 +324,7 @@ export default function GasStation() {
                 src="/4.jpg" 
                 alt="Сервис МТК" 
                 className="w-full h-full object-cover transform-gpu rounded-3xl"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"
               />
@@ -600,7 +600,7 @@ export default function GasStation() {
                 alt="АЗС МТК Вид сверху" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
@@ -619,7 +619,7 @@ export default function GasStation() {
                 alt="АЗС МТК Город" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
@@ -638,7 +638,7 @@ export default function GasStation() {
                 alt="АЗС МТК Детали" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-2xl md:rounded-3xl"
                 referrerPolicy="no-referrer"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
@@ -811,7 +811,7 @@ export default function GasStation() {
               <div className="flex flex-col space-y-2">
                 <Link to="/privacy" className="text-xs text-white/60 hover:text-white transition-colors underline underline-offset-4">Политика конфиденциальности</Link>
                 <p className="text-[10px] text-white/40 uppercase tracking-widest">
-                  ИНН: 0000000000 | ОГРН: 0000000000000
+                  ИНН: 052001363683 | ОГРН: 321057100063603
                 </p>
               </div>
             </motion.div>
