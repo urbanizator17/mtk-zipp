@@ -736,7 +736,8 @@ export default function Wholesale() {
               <h3 className="text-lg md:text-xl font-normal mb-2">О нас</h3>
               <ul className="flex flex-col space-y-4 font-light text-white/90">
                 <li className="leading-relaxed">г. Махачкала, ул. Генерала Омарова 1Б</li>
-                <li><a href="mailto:mtkazs@gmail.com" className="hover:text-white transition-colors">mtkazs@gmail.com</a></li>
+                <li><a href="tel:+79882294919" className="hover:text-white transition-colors">+7 988 229 49 19</a></li>
+                <li><a href="mailto:mtk22.55@yandex.ru" className="hover:text-white transition-colors">mtk22.55@yandex.ru</a></li>
               </ul>
             </motion.div>
 

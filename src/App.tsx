@@ -76,7 +76,7 @@ const PageWrapper = React.memo(({ children }: { children: React.ReactNode }) => 
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     transition={{ duration: 0.4, ease: "easeOut" }}
-    className="will-change-opacity transform-gpu"
+    className="will-change-opacity"
   >
     {children}
   </motion.div>
@@ -93,7 +93,7 @@ function AnimatedRoutes() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full transform-gpu will-change-opacity"
+          className="w-full will-change-opacity"
         >
           <Routes location={location}>
             <Route path="/" element={<Home />} />

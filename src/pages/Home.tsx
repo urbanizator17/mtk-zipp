@@ -96,10 +96,6 @@ export default function Home() {
             </nav>
 
             <div className="flex items-center gap-4 md:gap-8">
-              <div className="text-right hidden sm:flex flex-col items-end">
-                <div className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-1">Горячая линия</div>
-                <a href="tel:89889030092" className="font-medium text-base md:text-lg tracking-wider text-white hover:text-red-500 transition-colors">8 988-903-00-92</a>
-              </div>
             </div>
           </div>
         </motion.header>
@@ -407,12 +403,12 @@ export default function Home() {
 
                 <div className="grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
                   <span className="text-white/70">Телефон:</span>
-                  <a href="tel:+79888780990" className="hover:text-white transition-colors">+7 (988) 878-09-90</a>
+                  <a href="tel:+79882294919" className="hover:text-white transition-colors">+7 988 229 49 19</a>
                 </div>
 
                 <div className="grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
                   <span className="text-white/70">Почта:</span>
-                  <a href="mailto:mtkazs@gmail.com" className="hover:text-white transition-colors">mtkazs@gmail.com</a>
+                  <a href="mailto:mtk22.55@yandex.ru" className="hover:text-white transition-colors">mtk22.55@yandex.ru</a>
                 </div>
               </div>
             </motion.div>
@@ -427,10 +423,7 @@ export default function Home() {
             >
               <h3 className="text-white/90 font-light text-base md:text-lg mb-4">Социальные сети</h3>
               <div className="flex items-center gap-4 mb-8">
-                <a href="https://t.me/mtkazs" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="Telegram">
-                  <Send className="w-5 h-5" />
-                </a>
-                <a href="https://wa.me/79889030092" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="WhatsApp">
+                <a href="https://wa.me/79882294919" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="WhatsApp">
                   <MessageCircle className="w-5 h-5" />
                 </a>
               </div>

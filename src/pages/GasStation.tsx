@@ -695,7 +695,7 @@ export default function GasStation() {
               {
                 address: "Семендер, Казбекова 296",
                 hours: "Круглосуточно",
-                img: "/4.jpg"
+                img: "/semender.jpg"
               },
               {
                 address: "Каммаева",
@@ -729,7 +729,7 @@ export default function GasStation() {
 
                 {/* Content */}
                 <div className="p-8 relative z-10">
-                  <div className="flex items-start gap-4 mb-6">
+                  <div className="flex items-center gap-4 mb-6">
                     <div className="w-10 h-10 rounded-full bg-red-600/5 flex items-center justify-center shrink-0 border border-red-600/10 transition-colors group-hover:bg-red-600/10">
                       <MapPin className="w-5 h-5 text-red-600" />
                     </div>
@@ -784,9 +784,13 @@ export default function GasStation() {
                   </div>
                 </div>
 
+                <div className="grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start pb-4">
+                  <span className="text-white/70">Телефон:</span>
+                  <a href="tel:+79882294919" className="hover:text-white transition-colors">+7 988 229 49 19</a>
+                </div>
                 <div className="grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
                   <span className="text-white/70">Почта:</span>
-                  <a href="mailto:azs.mtk@mail.ru" className="hover:text-white transition-colors">azs.mtk@mail.ru</a>
+                  <a href="mailto:mtk22.55@yandex.ru" className="hover:text-white transition-colors">mtk22.55@yandex.ru</a>
                 </div>
               </div>
             </motion.div>
@@ -801,10 +805,7 @@ export default function GasStation() {
             >
               <h3 className="text-white/90 font-light text-base md:text-lg mb-4">Социальные сети</h3>
               <div className="flex items-center gap-4 mb-8">
-                <a href="https://t.me/mtkazs" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="Telegram">
-                  <Send className="w-5 h-5" />
-                </a>
-                <a href="https://wa.me/79889030092" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="WhatsApp">
+                <a href="https://wa.me/79882294919" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#D12020] transition-all duration-300" title="WhatsApp">
                   <MessageCircle className="w-5 h-5" />
                 </a>
               </div>
